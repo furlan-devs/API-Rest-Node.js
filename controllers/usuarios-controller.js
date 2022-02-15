@@ -3,33 +3,35 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 exports.postCadastro = async (req, res, next) => {
-
   try {
-      // var query = `SELECT * FROM users WHERE email = ?`;
-      // var result = await mysql.execute(query, [req.body.email]);
+    // var query = `SELECT * FROM users WHERE email = ?`;
+    // var result = await mysql.execute(query, [req.body.email]);
 
-      // if (result.length > 0) {
-      //     return res.status(409).send({ message: 'Usuário já cadastrado' })
-      // }
+    // if (result.length > 0) {
+    //     return res.status(409).send({ message: 'Usuário já cadastrado' })
+    // }
 
-      // const hash = await bcrypt.hashSync(req.body.password, 10);
+    // const hash = await bcrypt.hashSync(req.body.password, 10);
 
-      const usuarios = req.body.usuarios.map(usuario => [
-        usuario.email,
-          bcrypt.hashSync(user.password, 10)
-      ])
+    const usuarios = req.body.usuarios.map((usuario) => [
+      usuario.email,
+      bcrypt.hashSync(user.password, 10),
+    ]);
 
-      query = 'INSERT INTO usuarios (email, password) VALUES ?';
-      const results = await mysql.execute(query, [ usuarios ]);
+    query = "INSERT INTO usuarios (email, password) VALUES ?";
+    const results = await mysql.execute(query, [usuarios]);
 
-      const response = {
-          message: 'Usuário criado com sucesso',
-          createdUsers: req.body.usuarios.map(usuario => { return { email: usuario.email } })
-      }
-      return res.status(201).send(response);
-
+    const response = {
+      message: "Usuário criado com sucesso",
+      createdUsers: req.body.usuarios.map((usuario) => {
+        return { email: usuario.email };
+      }),
+    };
+    return res.status(201).send(response);
   } catch (error) {
-      return res.status(500).send({ error: error });
+    console.log(error);
+
+    return res.status(500).send({ error: error });
   }
 };
 
