@@ -1,14 +1,15 @@
-
-drop table pedidos;
-drop table usuarios;
-drop table imagens_produtos;
-drop table produtos;
+drop table users;
+drop table productimages;
+drop table orders;
+drop table products;
+drop table categories;
 
 CREATE TABLE IF NOT EXISTS products (
     productId INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(45),
     price FLOAT,
-    productImage VARCHAR(255)
+    productImage VARCHAR(255),
+    categoryId INT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS orders (
@@ -36,12 +37,8 @@ CREATE TABLE IF NOT EXISTS categories (
     name VARCHAR(100)
 );
 
-ALTER TABLE products ADD categoryId INT NULL;
 
-INSERT INTO categories (name) VALUES ('Material Escolar');
+INSERT INTO categories (categoryId, name) VALUES (1, 'Eletrodoméstico');
 
-UPDATE products SET categoryId = 1;
-
-ALTER TABLE products MODIFY categoryId INT NOT NULL;
 ALTER TABLE products ADD CONSTRAINT fk_product_category
 FOREIGN KEY (categoryId) REFERENCES categories(categoryId);
