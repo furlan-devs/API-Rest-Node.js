@@ -2,8 +2,21 @@ const mysql = require("../mysql");
 
 exports.productsGet = async (req, res, next) => {
   try {
-    const query = "SELECT * FROM products";
-    const result = await mysql.execute(query);
+    let name = '';
+    if(req.query.name) {
+      name = req.query.name;
+    }
+
+    const query = `
+      SELECT *
+      FROM products
+      WHERE categoryId = ?
+      AND 
+      (
+        name LIKE '%${name}%'
+        )
+    `;
+    const result = await mysql.execute(query, [req.query.categoryId]);
     const response = {
       length: result.length,
       products: result.map((prod) => {
@@ -34,7 +47,7 @@ exports.productPost = async (req, res, next) => {
       req.body.name,
       req.body.price,
       req.file.path,
-      req.body.categoryId
+      req.body.categoryId,
     ]);
 
     const response = {
