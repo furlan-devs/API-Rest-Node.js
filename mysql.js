@@ -1,11 +1,6 @@
 const mysql = require("mysql");
 
 var pool = mysql.createPool({
-  // "user" : "root",
-  // "password": "root",
-  // "database" : "ecommerce",
-  // "host" : "localhost",
-  // "port" : 3306
 
   connectionLimit: 1000,
   user: process.env.MYSQL_USER,

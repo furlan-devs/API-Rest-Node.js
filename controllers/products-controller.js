@@ -68,7 +68,6 @@ exports.productPost = async (req, res, next) => {
 
     return res.status(201).send(response);
   } catch (error) {
-    console.log(error);
     return res.status(500).send({ error: error });
   }
 };

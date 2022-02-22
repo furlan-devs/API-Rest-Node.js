@@ -10,14 +10,8 @@ exports.signupPost = async (req, res, next) => {
     if (result.length > 0) {
       return res.status(409).send({ message: "User already registered" });
     }
-    console.log(req.body.password)
 
     const hash = bcrypt.hashSync(req.body.password, 10);
-    // const usuarios = req.body.usuarios.map((usuario) => [
-    //   usuario.email,
-    //   bcrypt.hashSync(user.password, 10),
-    // ]);
-    console.log(hash)
 
     const results = await mysql.execute("INSERT INTO users (email, password) VALUES (?, ?)", [req.body.email, hash]);
     const response = {
@@ -30,7 +24,6 @@ exports.signupPost = async (req, res, next) => {
     return res.status(201).send(response);
     
   } catch (error) {
-    console.log(error)
     return res.status(500).send({ error: error });
   }
 };
